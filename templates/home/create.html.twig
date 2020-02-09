@@ -1,0 +1,30 @@
+{% extends('base.html.twig') %}
+{% block title %}Rašyti atsiliepimą{% endblock %}
+{% form_theme commentForm 'bootstrap_4_layout.html.twig' %}
+{% block body %}
+    <style>
+        .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+        .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+    </style>
+
+    <div class="example-wrapper">
+        <div class="row mt-3">
+            <div class="col-8 offset-2">
+                <div class="card bg-light">
+                    <div class="card-body">
+                        <h1 class="text-center">Rašyti atsiliepimą</h1>
+                        {{ form_start(commentForm) }}
+                            {{ form_label(commentForm.name, 'Vardas') }}
+                            {{ form_widget(commentForm.name) }}
+                            <div class="mt-3">
+                                {{ form_label(commentForm.comment, 'Atsiliepimas') }}
+                            </div>
+                            {{ form_widget(commentForm.comment) }}
+                            <button type="submit" class="btn btn-info mt-4">SIŲSTI ATSILIEPIMĄ</button>
+                        {{ form_end(commentForm) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

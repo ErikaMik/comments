@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Atsiliepimai{% endblock %}
+
+{% block body %}
+<style>
+    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+</style>
+
+<div class="example-wrapper">
+    <h1>Homepage</h1>
+
+    Atsiliepimai
+    <ul>
+        {% if comments is not empty %}
+            {% for comment in comments %}
+                <div class="card mt-2">
+                <div class="card-header p-2">
+                    <div>{{ comment.name }}</div>
+                    {{ comment.date|date("d-m-Y H:i") }}
+                </div>
+                <div class="card-body p-2">{{ comment.comment }}</div></div>
+            {% endfor %}
+        {% endif %}
+        <a class="btn btn-outline-info mt-3" href="{{ path('write-comment') }}">Rašyti atsiliepimą</a>
+    </ul>
+</div>
+{% endblock %}
