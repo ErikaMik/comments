@@ -27,24 +27,14 @@ class HomeController extends AbstractController
         $comments = $this->getDoctrine()
             ->getRepository('App\Entity\Comment')->findAll();
 
-        // Add pagination
-//        $queryBuilder = $repository->getWithSearchQueryBuilder($q);
-//
-//        $pagination = $paginator->paginate(
-//            $queryBuilder, /* query NOT result */
-//            $request->query->getInt('page', 1)/*page number*/,
-//            5/*limit per page*/
-//        ); 'pagination' => $pagination,
-
-        if(!empty($comments)){
-            return $this->render('home/index.html.twig', [
-                'comments' => $comments,
-            ]);
-        }else{
-            return $this->render('home/index.html.twig', [
-                'comments' => '',
-            ]);
-        }
+        $pagination = $paginator->paginate(
+            $comments, /* query NOT result */
+            $request->query->getInt('page', 1)/*page number*/,
+            5/*limit per page*/
+        );
+        return $this->render('home/index.html.twig', [
+            'pagination' => $pagination,
+        ]);
 
     }
 

@@ -12,9 +12,11 @@
     <h1>Homepage</h1>
 
     Atsiliepimai
+    {{ knp_pagination_render(pagination) }}
     <ul>
-        {% if comments is not empty %}
-            {% for comment in comments %}
+        {% if pagination is not empty %}
+            <a class="btn btn-info mt-3" href="{{ path('write-comment') }}">Rašyti atsiliepimą</a>
+            {% for comment in pagination %}
                 <div class="card mt-2">
                 <div class="card-header p-2">
                     <div>{{ comment.name }}</div>
@@ -23,7 +25,8 @@
                 <div class="card-body p-2">{{ comment.comment }}</div></div>
             {% endfor %}
         {% endif %}
-        <a class="btn btn-outline-info mt-3" href="{{ path('write-comment') }}">Rašyti atsiliepimą</a>
+        <a class="btn btn-info mt-3" href="{{ path('write-comment') }}">Rašyti atsiliepimą</a>
     </ul>
+    {{ knp_pagination_render(pagination) }}
 </div>
 {% endblock %}
