@@ -11,6 +11,7 @@ use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 class HomeController extends AbstractController
 {
@@ -21,8 +22,13 @@ class HomeController extends AbstractController
 
     /**
      * @Route("/home", name="home")
+     * @param AuthenticationUtils $authenticationUtils
+     * @param CommentRepository $repository
+     * @param Request $request
+     * @param PaginatorInterface $paginator
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function index(CommentRepository $repository, Request $request, PaginatorInterface $paginator)
+    public function index(AuthenticationUtils $authenticationUtils, CommentRepository $repository, Request $request, PaginatorInterface $paginator)
     {
         $comments = $this->getDoctrine()
             ->getRepository('App\Entity\Comment')->findAll();
@@ -32,8 +38,16 @@ class HomeController extends AbstractController
             $request->query->getInt('page', 1)/*page number*/,
             5/*limit per page*/
         );
+
+        // get the login error if there is one
+        $error = $authenticationUtils->getLastAuthenticationError();
+        // last username entered by the user
+        $lastUsername = $authenticationUtils->getLastUsername();
+
         return $this->render('home/index.html.twig', [
             'pagination' => $pagination,
+            'last_username' => $lastUsername,
+            'error' => $error
         ]);
 
     }

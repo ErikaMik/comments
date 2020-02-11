@@ -9,13 +9,21 @@
 </style>
 
 <div class="example-wrapper">
-    <h1>Homepage</h1>
+    {% if error %}
+        <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+    {% endif %}
 
-    Atsiliepimai
+    {% if app.user %}
+        <div class="mb-3">
+            You are logged in as {{ app.user.username }}, <a href="{{ path('app_logout') }}" class="btn btn-info">Logout</a>
+        </div>
+    {% endif %}
+    <h1>Atsiliepimai</h1>
+
     {{ knp_pagination_render(pagination) }}
     <ul>
         {% if pagination is not empty %}
-            <a class="btn btn-info mt-3" href="{{ path('write-comment') }}">Rašyti atsiliepimą</a>
+
             {% for comment in pagination %}
                 <div class="card mt-2">
                 <div class="card-header p-2">
